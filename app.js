@@ -1,9 +1,9 @@
 // ---- CLOCK ----
 function updateClock() {
   const now = new Date();
-  const h = now.getHours().toString().padStart(2,'0');
-  const m = now.getMinutes().toString().padStart(2,'0');
-  const s = now.getSeconds().toString().padStart(2,'0');
+  const h = String(now.getHours()).padStart(2,'0');
+  const m = String(now.getMinutes()).padStart(2,'0');
+  const s = String(now.getSeconds()).padStart(2,'0');
   const el = document.getElementById('sidebar-clock');
   if (el) el.textContent = `${h}:${m}:${s}`;
 }
@@ -23,7 +23,7 @@ function setGreeting() {
   if (gtEl) gtEl.textContent = greeting;
   if (giEl) giEl.textContent = icon;
   const dateEl = document.getElementById('greeting-date');
-  if (dateEl) dateEl.textContent = new Date().toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+  if (dateEl) dateEl.textContent = new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 }
 setGreeting();
 
@@ -67,10 +67,9 @@ function getDailyFact() {
 
 function showFact(index) {
   const el = document.getElementById('fact-text');
-  if (el) {
-    el.style.opacity = 0;
-    setTimeout(() => { el.textContent = facts[index]; el.style.transition = 'opacity 0.4s'; el.style.opacity = 1; }, 200);
-  }
+  if (!el) return;
+  el.style.opacity = 0;
+  setTimeout(() => { el.textContent = facts[index]; el.style.transition='opacity 0.4s'; el.style.opacity=1; }, 200);
 }
 
 const initialIndex = getDailyFact();
@@ -88,32 +87,81 @@ if (refreshBtn) {
   });
 }
 
-// ---- DASHBOARD TASK WIDGET ----
-function renderDashTasks() {
-  const container = document.getElementById('dash-task-list');
-  if (!container) return;
-  const tasks = JSON.parse(localStorage.getItem('steveapp_tasks') || '[]');
-  const pending = tasks.filter(t => !t.done)
-    .sort((a,b) => { const po={high:0,normal:1,low:2}; return po[a.priority]-po[b.priority] || b.createdAt-a.createdAt; })
-    .slice(0, 5);
-  if (!pending.length) {
-    container.innerHTML = `<div class="dash-task-empty"><i class="fas fa-check-circle"></i> All caught up! <a href="tasks.html">Add a task</a></div>`;
-    return;
-  }
-  container.innerHTML = pending.map(t => `
-    <div class="dash-task-item${t.priority==='high' ? ' dash-task-high' : ''}">
-      <i class="fas fa-circle-dot"></i>
-      <span class="dash-task-title">${escHtml(t.title)}</span>
-      ${t.priority==='high' ? '<span class="badge badge-high">High</span>' : ''}
-    </div>`).join('');
-  if (tasks.filter(t=>!t.done).length > 5) {
-    container.innerHTML += `<a href="tasks.html" class="dash-task-more">+${tasks.filter(t=>!t.done).length-5} more tasks</a>`;
-  }
-}
-
+// ---- HELPERS ----
 function escHtml(str) {
   if (!str) return '';
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
+
+// ---- DASHBOARD TASK WIDGET ----
+const STORAGE_KEY = 'steveapp_tasks';
+
+function getTasks() {
+  return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+}
+function saveTasks(tasks) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+}
+
+function renderDashTasks() {
+  const pendingEl   = document.getElementById('dash-task-list');
+  const completedEl = document.getElementById('dash-done-list');
+  if (!pendingEl) return;
+
+  const tasks   = getTasks();
+  const pending = tasks.filter(t => !t.done)
+    .sort((a,b) => { const po={high:0,normal:1,low:2}; return po[a.priority]-po[b.priority]||b.createdAt-a.createdAt; });
+  const done    = tasks.filter(t => t.done).slice(0,4);
+
+  if (!pending.length) {
+    pendingEl.innerHTML = `<div class="dash-task-empty"><i class="fas fa-check-circle"></i> All caught up! <a href="tasks.html">Add a task</a></div>`;
+  } else {
+    pendingEl.innerHTML = pending.map(t => `
+      <div class="dash-task-item${t.priority==='high'?' dash-task-high':''}" data-id="${escHtml(t.id)}">
+        <button class="dash-check-btn" data-id="${escHtml(t.id)}" title="Mark done"><i class="fas fa-circle"></i></button>
+        <span class="dash-task-title">${escHtml(t.title)}</span>
+        ${t.priority==='high'?'<span class="badge badge-high">High</span>':''}
+      </div>`).join('');
+  }
+
+  if (completedEl) {
+    if (!done.length) {
+      completedEl.innerHTML = `<div class="dash-task-empty"><i class="fas fa-circle"></i> Nothing completed yet.</div>`;
+    } else {
+      completedEl.innerHTML = done.map(t => `
+        <div class="dash-task-item dash-task-done">
+          <i class="fas fa-check-circle" style="color:var(--green);font-size:0.7rem"></i>
+          <span class="dash-task-title">${escHtml(t.title)}</span>
+        </div>`).join('');
+    }
+  }
+
+  // Check-off buttons
+  document.querySelectorAll('.dash-check-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tasks = getTasks();
+      const t = tasks.find(t => t.id === btn.dataset.id);
+      if (t) { t.done = true; saveTasks(tasks); renderDashTasks(); }
+    });
+  });
+}
+
+// Quick add from dashboard
+const dashInput  = document.getElementById('dash-task-input');
+const dashAddBtn = document.getElementById('dash-task-add');
+
+function dashAddTask() {
+  if (!dashInput) return;
+  const title = dashInput.value.trim();
+  if (!title) return;
+  const tasks = getTasks();
+  tasks.unshift({ id: Date.now().toString(36)+Math.random().toString(36).slice(2), title, note:'', priority:'normal', tag:'general', done:false, createdAt:Date.now() });
+  saveTasks(tasks);
+  dashInput.value = '';
+  renderDashTasks();
+}
+
+if (dashAddBtn) dashAddBtn.addEventListener('click', dashAddTask);
+if (dashInput)  dashInput.addEventListener('keydown', e => { if (e.key==='Enter') dashAddTask(); });
 
 renderDashTasks();

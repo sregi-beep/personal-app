@@ -24,6 +24,8 @@
   </nav>
 
   <main class="main-content">
+
+    <!-- Greeting (full width) -->
     <div class="dashboard-hero">
       <div class="greeting-card">
         <div class="greeting-icon" id="greeting-icon"></div>
@@ -32,49 +34,89 @@
       </div>
     </div>
 
-    <!-- Dashboard Task Widget -->
-    <div class="dash-tasks-widget">
-      <div class="widget-header">
-        <span><i class="fas fa-check-square"></i> Pending Tasks</span>
-        <a href="tasks.html" class="widget-link">View All <i class="fas fa-arrow-right"></i></a>
-      </div>
-      <div id="dash-task-list"></div>
-    </div>
+    <!-- TWO COLUMN LAYOUT -->
+    <div class="dash-two-col">
 
-    <!-- Fact -->
-    <div class="fact-section">
-      <div class="fact-card">
-        <div class="fact-header"><i class="fas fa-lightbulb"></i><span>Fact of the Day</span></div>
-        <p class="fact-text" id="fact-text">Loading fact...</p>
-        <button class="fact-refresh" id="fact-refresh"><i class="fas fa-rotate-right"></i> New Fact</button>
-      </div>
-    </div>
+      <!-- LEFT COLUMN -->
+      <div class="dash-left">
 
-    <!-- For You Feed -->
-    <div class="foryou-section">
-      <div class="foryou-header">
-        <span><i class="fas fa-bolt"></i> For You</span>
-        <span class="foryou-live"><i class="fas fa-circle"></i> Live</span>
-      </div>
-      <div class="foryou-tabs" id="foryou-tabs">
-        <button class="fy-tab active" data-topic="world">🌍 World</button>
-        <button class="fy-tab" data-topic="war">⚔️ Wars & Events</button>
-        <button class="fy-tab" data-topic="markets">📈 Markets</button>
-        <button class="fy-tab" data-topic="tech">🤖 AI & Tech</button>
-        <button class="fy-tab" data-topic="uspolitics">🏛️ US Politics</button>
-        <button class="fy-tab" data-topic="india">🇮🇳 India</button>
-        <button class="fy-tab" data-topic="usnews">🇺🇸 US News</button>
-        <button class="fy-tab" data-topic="economics">📊 Economics</button>
-        <button class="fy-tab" data-topic="sports">🏅 Sports & Events</button>
-      </div>
-      <div class="foryou-grid" id="foryou-grid">
-        <div class="foryou-placeholder"><i class="fas fa-rss"></i><p>Loading your feed...</p></div>
-      </div>
-    </div>
+        <!-- Fact of the Day -->
+        <div class="fact-section">
+          <div class="fact-card">
+            <div class="fact-header"><i class="fas fa-lightbulb"></i><span>Fact of the Day</span></div>
+            <p class="fact-text" id="fact-text">Loading fact...</p>
+            <button class="fact-refresh" id="fact-refresh"><i class="fas fa-rotate-right"></i> New Fact</button>
+          </div>
+        </div>
+
+        <!-- Daily Puzzle -->
+        <div class="puzzle-section">
+          <div class="puzzle-card" id="puzzle-card">
+            <div class="puzzle-header">
+              <span><i class="fas fa-brain"></i> Daily Puzzle</span>
+              <span class="puzzle-badge" id="puzzle-badge"></span>
+            </div>
+            <div class="puzzle-date" id="puzzle-date"></div>
+            <div class="puzzle-question" id="puzzle-question">Loading today's puzzle...</div>
+            <div class="puzzle-options" id="puzzle-options"></div>
+            <div class="puzzle-result" id="puzzle-result"></div>
+          </div>
+        </div>
+
+        <!-- For You Feed -->
+        <div class="foryou-section">
+          <div class="foryou-header">
+            <span><i class="fas fa-bolt"></i> For You</span>
+            <span class="foryou-live"><i class="fas fa-circle"></i> Live</span>
+          </div>
+          <div class="foryou-tabs" id="foryou-tabs">
+            <button class="fy-tab active" data-topic="world">🌍 World</button>
+            <button class="fy-tab" data-topic="war">⚔️ Wars & Events</button>
+            <button class="fy-tab" data-topic="markets">📈 Markets</button>
+            <button class="fy-tab" data-topic="tech">🤖 AI & Tech</button>
+            <button class="fy-tab" data-topic="uspolitics">🏛️ US Politics</button>
+            <button class="fy-tab" data-topic="india">🇮🇳 India</button>
+            <button class="fy-tab" data-topic="usnews">🇺🇸 US News</button>
+            <button class="fy-tab" data-topic="economics">📊 Economics</button>
+            <button class="fy-tab" data-topic="sports">🏅 Sports & Events</button>
+          </div>
+          <div class="foryou-grid" id="foryou-grid">
+            <div class="foryou-placeholder"><i class="fas fa-rss"></i><p>Loading your feed...</p></div>
+          </div>
+        </div>
+
+      </div><!-- /dash-left -->
+
+      <!-- RIGHT COLUMN -->
+      <div class="dash-right">
+        <div class="dash-tasks-widget">
+          <div class="widget-header">
+            <span><i class="fas fa-check-square"></i> Tasks</span>
+            <a href="tasks.html" class="widget-link">View All <i class="fas fa-arrow-right"></i></a>
+          </div>
+
+          <!-- Quick add -->
+          <div class="dash-quick-add">
+            <input type="text" id="dash-task-input" placeholder="Quick add task..." maxlength="200" />
+            <button id="dash-task-add"><i class="fas fa-plus"></i></button>
+          </div>
+
+          <!-- Pending -->
+          <div class="dash-task-section-label">Pending</div>
+          <div id="dash-task-list"></div>
+
+          <!-- Completed today -->
+          <div class="dash-task-section-label" style="margin-top:18px">Completed</div>
+          <div id="dash-done-list"></div>
+        </div>
+      </div><!-- /dash-right -->
+
+    </div><!-- /dash-two-col -->
+
   </main>
 
   <script src="app.js"></script>
-  <script src="tasks.js"></script>
+  <script src="puzzle.js"></script>
   <script src="foryou.js"></script>
 </body>
 </html>
