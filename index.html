@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Steve's Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-icon"><i class="fas fa-layer-group"></i></span>
+      <span class="logo-text">Steve's App</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-item active" id="nav-dashboard">
+        <i class="fas fa-home"></i><span>Dashboard</span>
+      </a></li>
+      <li><a href="news.html" class="nav-item" id="nav-news">
+        <i class="fas fa-newspaper"></i><span>News</span>
+      </a></li>
+    </ul>
+    <div class="sidebar-footer">
+      <span id="sidebar-clock"></span>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <div class="dashboard-hero">
+      <div class="greeting-card">
+        <div class="greeting-icon" id="greeting-icon"></div>
+        <h1 id="greeting-text">Hello, Steve</h1>
+        <p class="greeting-date" id="greeting-date"></p>
+      </div>
+    </div>
+
+    <div class="fact-section">
+      <div class="fact-card">
+        <div class="fact-header">
+          <i class="fas fa-lightbulb"></i>
+          <span>Fact of the Day</span>
+        </div>
+        <p class="fact-text" id="fact-text">Loading fact...</p>
+        <button class="fact-refresh" id="fact-refresh"><i class="fas fa-rotate-right"></i> New Fact</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
