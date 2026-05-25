@@ -57,20 +57,36 @@
           </div>
         </div>
 
+        <!-- Quant Practice -->
         <div class="quant-section">
           <div class="quant-card">
             <div class="quant-header">
               <span><i class="fas fa-square-root-variable"></i> Quant Practice</span>
-              <span class="quant-badge">10 Problems</span>
+              <span class="quant-counter" id="quant-counter"></span>
             </div>
-            <div class="quant-subtitle">Extra practice in probability, statistics, linear algebra, derivatives, stochastic thinking, and quant finance.</div>
+            <div class="quant-subtitle">Daily set of 10 problems — 2 per difficulty level. Resets every midnight. Filter by topic to drill a specific area.</div>
+
+            <!-- Topic filters -->
+            <div class="quant-filters" id="quant-filters">
+              <button class="qf-btn active" data-topic="all">All</button>
+              <button class="qf-btn" data-topic="Probability">Probability</button>
+              <button class="qf-btn" data-topic="Statistics">Statistics</button>
+              <button class="qf-btn" data-topic="Stochastic Calculus">Stoch Calc</button>
+              <button class="qf-btn" data-topic="Derivatives">Derivatives</button>
+              <button class="qf-btn" data-topic="Portfolio">Portfolio</button>
+              <button class="qf-btn" data-topic="Linear Algebra">Lin Alg</button>
+              <button class="qf-btn" data-topic="Risk">Risk</button>
+              <button class="qf-btn" data-topic="Finance">Finance</button>
+            </div>
+
             <div class="quant-problem-box">
               <div class="quant-problem-number" id="quant-problem-number">Problem 1 of 10</div>
               <div class="quant-problem-question" id="quant-problem-question">Loading problem...</div>
               <div class="quant-problem-answer" id="quant-problem-answer" style="display:none"></div>
               <div class="quant-actions">
+                <button id="quant-prev-problem" class="quant-btn quant-btn-secondary"><i class="fas fa-arrow-left"></i> Prev</button>
                 <button id="quant-show-answer" class="quant-btn"><i class="fas fa-eye"></i> Show Answer</button>
-                <button id="quant-next-problem" class="quant-btn quant-btn-secondary"><i class="fas fa-arrow-right"></i> Next Problem</button>
+                <button id="quant-next-problem" class="quant-btn quant-btn-secondary">Next <i class="fas fa-arrow-right"></i></button>
               </div>
             </div>
           </div>
@@ -83,14 +99,14 @@
           </div>
           <div class="foryou-tabs" id="foryou-tabs">
             <button class="fy-tab active" data-topic="world">🌍 World</button>
-            <button class="fy-tab" data-topic="war">⚔️ Wars & Events</button>
+            <button class="fy-tab" data-topic="war">⚔️ Wars &amp; Events</button>
             <button class="fy-tab" data-topic="markets">📈 Markets</button>
-            <button class="fy-tab" data-topic="tech">🤖 AI & Tech</button>
+            <button class="fy-tab" data-topic="tech">🤖 AI &amp; Tech</button>
             <button class="fy-tab" data-topic="uspolitics">🏛️ US Politics</button>
             <button class="fy-tab" data-topic="india">🇮🇳 India</button>
             <button class="fy-tab" data-topic="usnews">🇺🇸 US News</button>
             <button class="fy-tab" data-topic="economics">📊 Economics</button>
-            <button class="fy-tab" data-topic="sports">🏅 Sports & Events</button>
+            <button class="fy-tab" data-topic="sports">🏅 Sports &amp; Events</button>
           </div>
           <div class="foryou-grid" id="foryou-grid">
             <div class="foryou-placeholder"><i class="fas fa-rss"></i><p>Loading your feed...</p></div>
