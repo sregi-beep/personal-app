@@ -1,15 +1,24 @@
 # Steve's Personal App
 
-A clean personal dashboard and news reader.
+A clean personal dashboard, news reader, and markets tracker.
 
 ## Pages
 - **Dashboard** (`index.html`) — Time-based greeting + daily fun fact
 - **News** (`news.html`) — Live news by category (World, Finance, Politics, Tech, India, USA, War & Conflict, Economics)
+- **Markets** (`markets.html`) — Live stock quotes, forex rates, and market news
+
+## API Keys Needed
+
+| File | API | Free Key |
+|------|-----|----------|
+| `news.js` | NewsData.io (primary) | https://newsdata.io/register |
+| `news.js` | GNews (fallback) | https://gnews.io |
+| `markets.js` | Finnhub (stocks + forex) | https://finnhub.io/register |
 
 ## Setup
-1. Get a free API key at [newsdata.io/register](https://newsdata.io/register)
-2. Open `news.js` and paste your key into `NEWS_API_KEY = ''`
-3. Deploy via GitHub Pages (see below)
+1. Register for free keys at the links above
+2. Open each file and paste your key into the `const ... = ''` line at the top
+3. Deploy via GitHub Pages
 
 ## Deploy on GitHub Pages
 1. Go to repo **Settings → Pages**

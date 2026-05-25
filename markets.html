@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Markets – Steve's App</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-icon"><i class="fas fa-layer-group"></i></span>
+      <span class="logo-text">Steve's App</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-item"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+      <li><a href="news.html" class="nav-item"><i class="fas fa-newspaper"></i><span>News</span></a></li>
+      <li><a href="markets.html" class="nav-item active"><i class="fas fa-chart-line"></i><span>Markets</span></a></li>
+    </ul>
+    <div class="sidebar-footer"><span id="sidebar-clock"></span></div>
+  </nav>
+
+  <main class="main-content">
+    <div class="news-header">
+      <h1><i class="fas fa-chart-line"></i> Markets</h1>
+      <p>Live stock quotes, forex rates, and market news — powered by Finnhub</p>
+    </div>
+
+    <div class="api-notice">
+      <i class="fas fa-key"></i>
+      <span>Add your <strong>Finnhub API key</strong> in <code>markets.js</code> to load live data. Free key at <a href="https://finnhub.io/register" target="_blank" style="color:inherit">finnhub.io/register</a></span>
+    </div>
+
+    <!-- Market Tabs -->
+    <div class="category-tabs" id="market-tabs">
+      <button class="tab-btn active" data-tab="stocks">📈 Stocks</button>
+      <button class="tab-btn" data-tab="forex">💱 Forex</button>
+      <button class="tab-btn" data-tab="market-news">📰 Market News</button>
+    </div>
+
+    <!-- STOCKS -->
+    <div id="tab-stocks">
+      <div class="ticker-search">
+        <input type="text" id="ticker-input" placeholder="Enter ticker (e.g. AAPL, TSLA, NVDA)" />
+        <button id="ticker-btn"><i class="fas fa-search"></i> Quote</button>
+      </div>
+      <div id="quote-result"></div>
+      <div class="section-label">Watchlist</div>
+      <div class="watchlist-grid" id="watchlist-grid"></div>
+    </div>
+
+    <!-- FOREX -->
+    <div id="tab-forex" style="display:none">
+      <div class="section-label">Major Currency Pairs</div>
+      <div class="forex-grid" id="forex-grid"></div>
+    </div>
+
+    <!-- MARKET NEWS -->
+    <div id="tab-market-news" style="display:none">
+      <div class="news-grid" id="market-news-grid"></div>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+  <script src="markets.js"></script>
+</body>
+</html>

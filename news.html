@@ -15,16 +15,11 @@
       <span class="logo-text">Steve's App</span>
     </div>
     <ul class="nav-links">
-      <li><a href="index.html" class="nav-item" id="nav-dashboard">
-        <i class="fas fa-home"></i><span>Dashboard</span>
-      </a></li>
-      <li><a href="news.html" class="nav-item active" id="nav-news">
-        <i class="fas fa-newspaper"></i><span>News</span>
-      </a></li>
+      <li><a href="index.html" class="nav-item"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+      <li><a href="news.html" class="nav-item active"><i class="fas fa-newspaper"></i><span>News</span></a></li>
+      <li><a href="markets.html" class="nav-item"><i class="fas fa-chart-line"></i><span>Markets</span></a></li>
     </ul>
-    <div class="sidebar-footer">
-      <span id="sidebar-clock"></span>
-    </div>
+    <div class="sidebar-footer"><span id="sidebar-clock"></span></div>
   </nav>
 
   <main class="main-content">
@@ -32,12 +27,10 @@
       <h1><i class="fas fa-newspaper"></i> News Feed</h1>
       <p>Stay up to date across categories</p>
     </div>
-
     <div class="api-notice">
       <i class="fas fa-key"></i>
-      <span>Add your <strong>NewsData.io API key</strong> in <code>news.js</code> to load live articles.</span>
+      <span>Add your <strong>NewsData.io</strong> key (primary) and/or <strong>GNews</strong> key (fallback) in <code>news.js</code>.</span>
     </div>
-
     <div class="category-tabs" id="category-tabs">
       <button class="tab-btn active" data-category="world">🌍 World</button>
       <button class="tab-btn" data-category="top">📰 General</button>
@@ -49,12 +42,8 @@
       <button class="tab-btn" data-category="war">⚔️ War & Conflict</button>
       <button class="tab-btn" data-category="economics">📊 Economics</button>
     </div>
-
     <div class="news-grid" id="news-grid">
-      <div class="news-placeholder">
-        <i class="fas fa-satellite-dish"></i>
-        <p>Add your API key to fetch live news</p>
-      </div>
+      <div class="news-placeholder"><i class="fas fa-satellite-dish"></i><p>Add your API key to fetch live news</p></div>
     </div>
   </main>
 
