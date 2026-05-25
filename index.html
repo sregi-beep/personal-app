@@ -25,7 +25,6 @@
 
   <main class="main-content">
 
-    <!-- Greeting (full width) -->
     <div class="dashboard-hero">
       <div class="greeting-card">
         <div class="greeting-icon" id="greeting-icon"></div>
@@ -34,13 +33,9 @@
       </div>
     </div>
 
-    <!-- TWO COLUMN LAYOUT -->
     <div class="dash-two-col">
-
-      <!-- LEFT COLUMN -->
       <div class="dash-left">
 
-        <!-- Fact of the Day -->
         <div class="fact-section">
           <div class="fact-card">
             <div class="fact-header"><i class="fas fa-lightbulb"></i><span>Fact of the Day</span></div>
@@ -49,7 +44,6 @@
           </div>
         </div>
 
-        <!-- Daily Puzzle -->
         <div class="puzzle-section">
           <div class="puzzle-card" id="puzzle-card">
             <div class="puzzle-header">
@@ -63,7 +57,25 @@
           </div>
         </div>
 
-        <!-- For You Feed -->
+        <div class="quant-section">
+          <div class="quant-card">
+            <div class="quant-header">
+              <span><i class="fas fa-square-root-variable"></i> Quant Practice</span>
+              <span class="quant-badge">10 Problems</span>
+            </div>
+            <div class="quant-subtitle">Extra practice in probability, statistics, linear algebra, derivatives, stochastic thinking, and quant finance.</div>
+            <div class="quant-problem-box">
+              <div class="quant-problem-number" id="quant-problem-number">Problem 1 of 10</div>
+              <div class="quant-problem-question" id="quant-problem-question">Loading problem...</div>
+              <div class="quant-problem-answer" id="quant-problem-answer" style="display:none"></div>
+              <div class="quant-actions">
+                <button id="quant-show-answer" class="quant-btn"><i class="fas fa-eye"></i> Show Answer</button>
+                <button id="quant-next-problem" class="quant-btn quant-btn-secondary"><i class="fas fa-arrow-right"></i> Next Problem</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="foryou-section">
           <div class="foryou-header">
             <span><i class="fas fa-bolt"></i> For You</span>
@@ -85,38 +97,31 @@
           </div>
         </div>
 
-      </div><!-- /dash-left -->
+      </div>
 
-      <!-- RIGHT COLUMN -->
       <div class="dash-right">
         <div class="dash-tasks-widget">
           <div class="widget-header">
             <span><i class="fas fa-check-square"></i> Tasks</span>
             <a href="tasks.html" class="widget-link">View All <i class="fas fa-arrow-right"></i></a>
           </div>
-
-          <!-- Quick add -->
           <div class="dash-quick-add">
             <input type="text" id="dash-task-input" placeholder="Quick add task..." maxlength="200" />
             <button id="dash-task-add"><i class="fas fa-plus"></i></button>
           </div>
-
-          <!-- Pending -->
           <div class="dash-task-section-label">Pending</div>
           <div id="dash-task-list"></div>
-
-          <!-- Completed today -->
           <div class="dash-task-section-label" style="margin-top:18px">Completed</div>
           <div id="dash-done-list"></div>
         </div>
-      </div><!-- /dash-right -->
-
-    </div><!-- /dash-two-col -->
+      </div>
+    </div>
 
   </main>
 
   <script src="app.js"></script>
   <script src="puzzle.js"></script>
+  <script src="quant.js"></script>
   <script src="foryou.js"></script>
 </body>
 </html>
