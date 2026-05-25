@@ -3,7 +3,7 @@
 // Stocks + Market News : Finnhub (free) — https://finnhub.io/register
 // Forex               : ExchangeRate-API (no key needed)
 // -------------------------------------------------------
-const FINNHUB_KEY = ''; /d89spg9r01qhi7rtshb0d89spg9r01qhi7rtshbg/ <-- paste your Finnhub key here
+const FINNHUB_KEY = 'd89spg9r01qhi7rtshb0d89spg9r01qhi7rtshbg'; // <-- paste your Finnhub key here
 const FH = 'https://finnhub.io/api/v1';
 
 const WATCHLIST = ['AAPL','MSFT','NVDA','TSLA','GOOGL','AMZN','META','SPY'];
