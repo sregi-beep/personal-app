@@ -3,7 +3,7 @@
 // Get a FREE API key at: https://newsdata.io/register
 // Replace the empty string below with your key.
 // -------------------------------------------------------
-const NEWS_API_KEY = ''; // <-- paste your NewsData.io key here
+const NEWS_API_KEY = 'pub_d685a1e503a646b69541bfa42c40acae'; // <-- paste your NewsData.io key here
 const BASE_URL = 'https://newsdata.io/api/1/news';
 
 // Category mappings for NewsData.io
