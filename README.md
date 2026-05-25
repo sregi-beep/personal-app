@@ -7,4 +7,4 @@ A personal dashboard with news api and random facts and problems.
 - **News**  Live news
 - **Markets** Live stock pricees asn etc. 
 
-URL: 'https://sregi-beep.github.io/personal-app/`
+URL: https://sregi-beep.github.io/personal-app/
