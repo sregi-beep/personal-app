@@ -3,7 +3,7 @@
 // NewsData.io key: https://newsdata.io/register
 // GNews key:       https://gnews.io  (free tier)
 // -------------------------------------------------------
-const NEWS_API_KEY  = ''; // <-- NewsData.io key
+const NEWS_API_KEY  = 'pub_d685a1e503a646b69541bfa42c40acae'; // <-- NewsData.io key
 const GNEWS_API_KEY = ''; // <-- GNews key (fallback)
 
 const BASE_URL   = 'https://newsdata.io/api/1/news';
