@@ -1,9 +1,9 @@
 // ---- CLOCK ----
 function updateClock() {
   const now = new Date();
-  const h = now.getHours().toString().padStart(2, '0');
-  const m = now.getMinutes().toString().padStart(2, '0');
-  const s = now.getSeconds().toString().padStart(2, '0');
+  const h = now.getHours().toString().padStart(2,'0');
+  const m = now.getMinutes().toString().padStart(2,'0');
+  const s = now.getSeconds().toString().padStart(2,'0');
   const el = document.getElementById('sidebar-clock');
   if (el) el.textContent = `${h}:${m}:${s}`;
 }
@@ -14,21 +14,16 @@ updateClock();
 function setGreeting() {
   const hour = new Date().getHours();
   let greeting, icon;
-  if (hour >= 5 && hour < 12)  { greeting = 'Good Morning, Steve'; icon = '🌅'; }
+  if (hour >= 5 && hour < 12)       { greeting = 'Good Morning, Steve'; icon = '🌅'; }
   else if (hour >= 12 && hour < 17) { greeting = 'Good Afternoon, Steve'; icon = '☀️'; }
   else if (hour >= 17 && hour < 21) { greeting = 'Good Evening, Steve'; icon = '🌆'; }
-  else { greeting = 'Good Night, Steve'; icon = '🌙'; }
-
+  else                               { greeting = 'Good Night, Steve'; icon = '🌙'; }
   const gtEl = document.getElementById('greeting-text');
   const giEl = document.getElementById('greeting-icon');
   if (gtEl) gtEl.textContent = greeting;
   if (giEl) giEl.textContent = icon;
-
   const dateEl = document.getElementById('greeting-date');
-  if (dateEl) {
-    const opts = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    dateEl.textContent = new Date().toLocaleDateString('en-US', opts);
-  }
+  if (dateEl) dateEl.textContent = new Date().toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
 }
 setGreeting();
 
@@ -74,11 +69,7 @@ function showFact(index) {
   const el = document.getElementById('fact-text');
   if (el) {
     el.style.opacity = 0;
-    setTimeout(() => {
-      el.textContent = facts[index];
-      el.style.transition = 'opacity 0.4s';
-      el.style.opacity = 1;
-    }, 200);
+    setTimeout(() => { el.textContent = facts[index]; el.style.transition = 'opacity 0.4s'; el.style.opacity = 1; }, 200);
   }
 }
 
@@ -96,3 +87,33 @@ if (refreshBtn) {
     showFact(next);
   });
 }
+
+// ---- DASHBOARD TASK WIDGET ----
+function renderDashTasks() {
+  const container = document.getElementById('dash-task-list');
+  if (!container) return;
+  const tasks = JSON.parse(localStorage.getItem('steveapp_tasks') || '[]');
+  const pending = tasks.filter(t => !t.done)
+    .sort((a,b) => { const po={high:0,normal:1,low:2}; return po[a.priority]-po[b.priority] || b.createdAt-a.createdAt; })
+    .slice(0, 5);
+  if (!pending.length) {
+    container.innerHTML = `<div class="dash-task-empty"><i class="fas fa-check-circle"></i> All caught up! <a href="tasks.html">Add a task</a></div>`;
+    return;
+  }
+  container.innerHTML = pending.map(t => `
+    <div class="dash-task-item${t.priority==='high' ? ' dash-task-high' : ''}">
+      <i class="fas fa-circle-dot"></i>
+      <span class="dash-task-title">${escHtml(t.title)}</span>
+      ${t.priority==='high' ? '<span class="badge badge-high">High</span>' : ''}
+    </div>`).join('');
+  if (tasks.filter(t=>!t.done).length > 5) {
+    container.innerHTML += `<a href="tasks.html" class="dash-task-more">+${tasks.filter(t=>!t.done).length-5} more tasks</a>`;
+  }
+}
+
+function escHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+renderDashTasks();

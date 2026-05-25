@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tasks – Steve's App</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-icon"><i class="fas fa-layer-group"></i></span>
+      <span class="logo-text">Steve's App</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html"   class="nav-item"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+      <li><a href="news.html"    class="nav-item"><i class="fas fa-newspaper"></i><span>News</span></a></li>
+      <li><a href="markets.html" class="nav-item"><i class="fas fa-chart-line"></i><span>Markets</span></a></li>
+      <li><a href="tasks.html"   class="nav-item active"><i class="fas fa-check-square"></i><span>Tasks</span></a></li>
+    </ul>
+    <div class="sidebar-footer"><span id="sidebar-clock"></span></div>
+  </nav>
+
+  <main class="main-content">
+    <div class="tasks-header">
+      <h1><i class="fas fa-check-square"></i> Tasks & Notes</h1>
+      <p>Your personal workspace — everything carries over until you're done.</p>
+    </div>
+
+    <!-- Add Task -->
+    <div class="task-input-card">
+      <div class="task-input-row">
+        <input type="text" id="task-title" placeholder="Add a task or note..." maxlength="200" />
+        <select id="task-priority">
+          <option value="normal">Normal</option>
+          <option value="high">High</option>
+          <option value="low">Low</option>
+        </select>
+        <select id="task-tag">
+          <option value="general">📌 General</option>
+          <option value="school">🎓 School</option>
+          <option value="work">💼 Work</option>
+          <option value="personal">💪 Personal</option>
+          <option value="finance">💰 Finance</option>
+          <option value="research">🔬 Research</option>
+        </select>
+        <button id="task-add-btn"><i class="fas fa-plus"></i> Add</button>
+      </div>
+      <textarea id="task-note" placeholder="Optional note / details..." rows="2" maxlength="1000"></textarea>
+    </div>
+
+    <!-- Filters -->
+    <div class="task-filters">
+      <button class="tf-btn active" data-filter="all">All</button>
+      <button class="tf-btn" data-filter="pending">Pending</button>
+      <button class="tf-btn" data-filter="completed">Completed</button>
+      <div class="task-filter-right">
+        <span id="task-count"></span>
+        <button id="clear-completed-btn"><i class="fas fa-trash-alt"></i> Clear Completed</button>
+      </div>
+    </div>
+
+    <!-- Task List -->
+    <div id="task-list"></div>
+
+    <!-- Notes Section -->
+    <div class="notes-section">
+      <div class="notes-header">
+        <i class="fas fa-sticky-note"></i> Quick Notes
+        <button id="note-save-btn"><i class="fas fa-floppy-disk"></i> Save</button>
+      </div>
+      <textarea id="quick-note-pad" placeholder="Jot down anything here — ideas, reminders, links, drafts..." rows="8"></textarea>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+  <script src="tasks.js"></script>
+</body>
+</html>
