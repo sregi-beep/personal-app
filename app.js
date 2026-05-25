@@ -1,4 +1,4 @@
-// ---- CLOCK ----
+// time and stuff
 function updateClock() {
   const now = new Date();
   const h = String(now.getHours()).padStart(2,'0');
@@ -10,24 +10,22 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
-// ---- GREETING ----
+// -say hi to me 
 function setGreeting() {
   const hour = new Date().getHours();
   let greeting, icon;
-  if (hour >= 5 && hour < 12)       { greeting = 'Good Morning, Steve'; icon = '🌅'; }
-  else if (hour >= 12 && hour < 17) { greeting = 'Good Afternoon, Steve'; icon = '☀️'; }
-  else if (hour >= 17 && hour < 21) { greeting = 'Good Evening, Steve'; icon = '🌆'; }
-  else                               { greeting = 'Good Night, Steve'; icon = '🌙'; }
+  if (hour >= 5 && hour < 12)       { greeting = 'Good Morning, Steve'; }
+  else if (hour >= 12 && hour < 17) { greeting = 'Good Afternoon, Steve'; }
+  else if (hour >= 17 && hour < 21) { greeting = 'Good Evening, Steve'; }
+  else                               { greeting = 'Good Night, Steve'; }
   const gtEl = document.getElementById('greeting-text');
-  const giEl = document.getElementById('greeting-icon');
   if (gtEl) gtEl.textContent = greeting;
-  if (giEl) giEl.textContent = icon;
   const dateEl = document.getElementById('greeting-date');
   if (dateEl) dateEl.textContent = new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 }
 setGreeting();
 
-// ---- FACTS ----
+// randome facts hahahaha
 const facts = [
   "A group of flamingos is called a 'flamboyance'.",
   "Honey never spoils — archaeologists found 3,000-year-old honey in Egyptian tombs and it was still edible.",
