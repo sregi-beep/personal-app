@@ -1,62 +1,61 @@
 // -------------------------------------------------------
 // FORYOU.JS — Personalized live feed via RSS2JSON
-// No API key needed for basic use (10,000 req/day free)
-// Sources are hand-picked RSS feeds per topic
+// No API key needed (10,000 req/day free on rss2json)
+// Uses verified RSS feeds + Google News RSS as fallback
 // -------------------------------------------------------
 
-const RSS2JSON = 'https://api.rss2json.com/v1/api.json?rss_url=';
+const RSS2JSON  = 'https://api.rss2json.com/v1/api.json?rss_url=';
+const GNEWS_RSS = (q) => `https://news.google.com/rss/search?q=${encodeURIComponent(q)}&hl=en-US&gl=US&ceid=US:en`;
 
-// Each topic has 2-3 RSS feeds. We fetch the first that succeeds.
 const TOPICS = {
   world: [
     'https://feeds.bbci.co.uk/news/world/rss.xml',
-    'https://www.aljazeera.com/xml/rss/all.xml',
-    'https://feeds.reuters.com/reuters/worldNews',
+    'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',
+    GNEWS_RSS('world news'),
   ],
   war: [
     'https://feeds.bbci.co.uk/news/world/rss.xml',
+    GNEWS_RSS('war conflict military'),
     'https://www.aljazeera.com/xml/rss/all.xml',
-    'https://rss.cnn.com/rss/edition_world.rss',
   ],
   markets: [
     'https://feeds.bloomberg.com/markets/news.rss',
-    'https://feeds.reuters.com/reuters/businessNews',
     'https://www.cnbc.com/id/10000664/device/rss/rss.html',
+    GNEWS_RSS('stock market finance'),
   ],
   tech: [
     'https://techcrunch.com/feed/',
-    'https://feeds.arstechnica.com/arstechnica/technology-lab',
-    'https://www.theverge.com/rss/index.xml',
+    'https://feeds.arstechnica.com/arstechnica/index',
+    'https://www.wired.com/feed/rss',
   ],
   uspolitics: [
     'https://feeds.npr.org/1014/rss.xml',
-    'https://rss.politico.com/politics-news.xml',
-    'https://feeds.washingtonpost.com/rss/politics',
+    'https://www.politico.com/rss/politicopicks.xml',
+    GNEWS_RSS('US politics'),
   ],
   india: [
-    'https://feeds.feedburner.com/ndtvnews-india-news',
-    'https://timesofindia.indiatimes.com/rssfeeds/296589292.cms',
+    GNEWS_RSS('India news'),
+    'https://timesofindia.indiatimes.com/rssfeedstopstories.cms',
     'https://www.thehindu.com/news/national/feeder/default.rss',
   ],
   usnews: [
     'https://feeds.npr.org/1003/rss.xml',
-    'https://rss.cnn.com/rss/edition_us.rss',
-    'https://feeds.washingtonpost.com/rss/national',
+    'https://rss.nytimes.com/services/xml/rss/nyt/US.xml',
+    GNEWS_RSS('United States news'),
   ],
   economics: [
-    'https://feeds.reuters.com/reuters/businessNews',
+    GNEWS_RSS('economics economy inflation GDP'),
     'https://www.economist.com/finance-and-economics/rss.xml',
-    'https://feeds.ft.com/rss/home/us',
+    'https://feeds.bloomberg.com/economics/news.rss',
   ],
   sports: [
     'https://feeds.bbci.co.uk/sport/rss.xml',
     'https://www.espn.com/espn/rss/news',
-    'https://rss.cnn.com/rss/edition_sport.rss',
+    GNEWS_RSS('sports Olympics major events'),
   ],
 };
 
-// War/conflict keywords to filter world feed for the war tab
-const WAR_KEYWORDS = ['war','conflict','military','troops','battle','attack','strike','missile','ceasefire','invasion','soldier','rebel','airstrike','hostage','siege'];
+const WAR_KEYWORDS = ['war','conflict','military','troops','battle','attack','strike','missile','ceasefire','invasion','soldier','rebel','airstrike','hostage','siege','bombing','casualties'];
 
 let activeTopic = 'world';
 
@@ -64,20 +63,20 @@ async function fetchFeed(topic) {
   const urls = TOPICS[topic];
   for (const url of urls) {
     try {
-      const res = await fetch(`${RSS2JSON}${encodeURIComponent(url)}&count=20`);
+      const apiUrl = `${RSS2JSON}${encodeURIComponent(url)}&count=20&t=${Date.now()}`;
+      const res = await fetch(apiUrl);
       if (!res.ok) continue;
       const data = await res.json();
       if (data.status === 'ok' && data.items?.length) {
         let items = data.items;
-        // For war tab, filter by keywords
         if (topic === 'war') {
           const filtered = items.filter(item => {
             const text = (item.title + ' ' + (item.description || '')).toLowerCase();
             return WAR_KEYWORDS.some(kw => text.includes(kw));
           });
-          items = filtered.length >= 4 ? filtered : items; // fallback if too few matches
+          items = filtered.length >= 4 ? filtered : items;
         }
-        return { items, feed: data.feed };
+        return { items, feedTitle: data.feed?.title || '' };
       }
     } catch { continue; }
   }
@@ -87,10 +86,10 @@ async function fetchFeed(topic) {
 function timeAgo(dateStr) {
   if (!dateStr) return '';
   const diff = Math.floor((Date.now() - new Date(dateStr)) / 1000);
-  if (diff < 60)   return `${diff}s ago`;
-  if (diff < 3600) return `${Math.floor(diff/60)}m ago`;
-  if (diff < 86400) return `${Math.floor(diff/3600)}h ago`;
-  return `${Math.floor(diff/86400)}d ago`;
+  if (diff < 60)    return `${diff}s ago`;
+  if (diff < 3600)  return `${Math.floor(diff / 60)}m ago`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+  return `${Math.floor(diff / 86400)}d ago`;
 }
 
 function escH(str) {
@@ -100,36 +99,38 @@ function escH(str) {
 
 function stripHtml(str) {
   if (!str) return '';
-  return str.replace(/<[^>]*>/g, '').replace(/&nbsp;/g,' ').replace(/&amp;/g,'&').trim();
+  return str.replace(/<[^>]*>/g, '').replace(/&nbsp;/g,' ').replace(/&amp;/g,'&').replace(/&#39;/g,"'").trim();
 }
 
 async function loadFeed(topic) {
   const grid = document.getElementById('foryou-grid');
-  grid.innerHTML = `<div class="foryou-placeholder"><i class="fas fa-circle-notch fa-spin"></i><p>Loading...</p></div>`;
+  grid.innerHTML = `<div class="foryou-placeholder"><i class="fas fa-circle-notch fa-spin"></i><p>Loading your feed...</p></div>`;
 
   const result = await fetchFeed(topic);
 
   if (!result) {
-    grid.innerHTML = `<div class="foryou-placeholder"><i class="fas fa-satellite-dish"></i><p>Could not load feed. Try again later.</p></div>`;
+    grid.innerHTML = `<div class="foryou-placeholder"><i class="fas fa-satellite-dish"></i><p>Could not load feed. Check your connection and try again.</p></div>`;
     return;
   }
 
   grid.innerHTML = '';
   result.items.slice(0, 12).forEach(item => {
-    const card = document.createElement('a');
+    const card  = document.createElement('a');
     card.className = 'fy-card';
-    card.href = item.link || '#';
+    card.href   = item.link || '#';
     card.target = '_blank';
-    card.rel = 'noopener noreferrer';
+    card.rel    = 'noopener noreferrer';
 
-    const desc = stripHtml(item.description || '').slice(0, 140);
-    const ago  = timeAgo(item.pubDate);
-    const src  = result.feed?.title || 'RSS';
+    const rawDesc = stripHtml(item.description || '');
+    const desc    = rawDesc.length > 140 ? rawDesc.slice(0, 140) + '…' : rawDesc;
+    const ago     = timeAgo(item.pubDate);
+    // Prefer item author/source, fallback to feed title
+    const src     = item.author || result.feedTitle || 'News';
 
     card.innerHTML = `
       <div class="fy-source">${escH(src)}</div>
       <div class="fy-title">${escH(item.title || '')}</div>
-      ${desc ? `<div class="fy-desc">${escH(desc)}…</div>` : ''}
+      ${desc ? `<div class="fy-desc">${escH(desc)}</div>` : ''}
       <div class="fy-meta">${ago ? `<span>${ago}</span>` : ''}</div>`;
     grid.appendChild(card);
   });
