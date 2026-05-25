@@ -23,6 +23,7 @@
   </nav>
 
   <main class="main-content">
+    <!-- Greeting -->
     <div class="dashboard-hero">
       <div class="greeting-card">
         <div class="greeting-icon" id="greeting-icon"></div>
@@ -30,6 +31,8 @@
         <p class="greeting-date" id="greeting-date"></p>
       </div>
     </div>
+
+    <!-- Fact -->
     <div class="fact-section">
       <div class="fact-card">
         <div class="fact-header"><i class="fas fa-lightbulb"></i><span>Fact of the Day</span></div>
@@ -37,8 +40,35 @@
         <button class="fact-refresh" id="fact-refresh"><i class="fas fa-rotate-right"></i> New Fact</button>
       </div>
     </div>
+
+    <!-- For You Feed -->
+    <div class="foryou-section">
+      <div class="foryou-header">
+        <span><i class="fas fa-bolt"></i> For You</span>
+        <span class="foryou-live"><i class="fas fa-circle"></i> Live</span>
+      </div>
+
+      <!-- Topic Pills -->
+      <div class="foryou-tabs" id="foryou-tabs">
+        <button class="fy-tab active" data-topic="world">🌍 World</button>
+        <button class="fy-tab" data-topic="war">⚔️ Wars & Events</button>
+        <button class="fy-tab" data-topic="markets">📈 Markets</button>
+        <button class="fy-tab" data-topic="tech">🤖 AI & Tech</button>
+        <button class="fy-tab" data-topic="uspolitics">🏛️ US Politics</button>
+        <button class="fy-tab" data-topic="india">🇮🇳 India</button>
+        <button class="fy-tab" data-topic="usnews">🇺🇸 US News</button>
+        <button class="fy-tab" data-topic="economics">📊 Economics</button>
+        <button class="fy-tab" data-topic="sports">🏅 Sports & Events</button>
+      </div>
+
+      <!-- Feed Cards -->
+      <div class="foryou-grid" id="foryou-grid">
+        <div class="foryou-placeholder"><i class="fas fa-rss"></i><p>Loading your feed...</p></div>
+      </div>
+    </div>
   </main>
 
   <script src="app.js"></script>
+  <script src="foryou.js"></script>
 </body>
 </html>
