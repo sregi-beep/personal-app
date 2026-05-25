@@ -3,7 +3,7 @@
 // Get a FREE API key at: https://finnhub.io/register
 // Replace the empty string below with your key.
 // -------------------------------------------------------
-const FINNHUB_KEY = ''; // <-- paste your Finnhub key here
+const FINNHUB_KEY = 'd89spg9r01qhi7rtshb0d89spg9r01qhi7rtshbg'; // <-- paste your Finnhub key here
 const FH = 'https://finnhub.io/api/v1';
 
 // Default watchlist tickers
