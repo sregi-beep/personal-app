@@ -1,13 +1,8 @@
-// -------------------------------------------------------
 // FORYOU.JS — Live RSS feed using AllOrigins CORS proxy
-// No API key, no domain restrictions, fully free
-// -------------------------------------------------------
 
 // AllOrigins proxies any URL and returns JSON with .contents (raw XML)
 const PROXY = url => `https://api.allorigins.win/get?url=${encodeURIComponent(url)}&t=${Date.now()}`;
 
-// Google News RSS — reliable fallback for every topic
-const GN = q => `https://news.google.com/rss/search?q=${encodeURIComponent(q)}&hl=en-US&gl=US&ceid=US:en`;
 
 const TOPICS = {
   world:      [ GN('world news today'), 'https://feeds.bbci.co.uk/news/world/rss.xml' ],
@@ -108,7 +103,7 @@ async function loadFeed(topic) {
   });
 }
 
-// Tab switching
+//switch tabs 
 document.querySelectorAll('.fy-tab').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.fy-tab').forEach(b => b.classList.remove('active'));
@@ -117,6 +112,4 @@ document.querySelectorAll('.fy-tab').forEach(btn => {
     loadFeed(activeTopic);
   });
 });
-
-// Initial load
 loadFeed(activeTopic);
